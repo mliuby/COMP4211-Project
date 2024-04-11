@@ -1,1 +1,9 @@
 .DS_Store
+
+Proposal/*.aux 
+Proposal/*.bbl
+Proposal/*.blg
+Proposal/*.log
+Proposal/*.out
+Proposal/*.pdf
+Proposal/*.synctex.gz
