@@ -7,3 +7,9 @@ Proposal/*.log
 Proposal/*.out
 Proposal/*.pdf
 Proposal/*.synctex.gz
+
+Project/datasets/*
+
+Project/cyclegan/cycle_gan_model.py
+
+Project/cyclegan/networks.py
