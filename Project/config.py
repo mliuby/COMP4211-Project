@@ -93,6 +93,7 @@ class opt:
         # name of classifier
         self.name_C = 'C'
         
+        
         # training data fold for generator
         self.data_fold_A = os.path.join(self.data_path, self.name_A)
         self.data_fold_B = os.path.join(self.data_path, self.name_B)
