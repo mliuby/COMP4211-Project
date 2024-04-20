@@ -18,11 +18,17 @@ class opt:
         # number of epochs to save the model
         self.n_save = 10
         
+        # number of classes
+        self.n_classes = 4
+        
         # initial filters in the generator
         self.ngf = 64
         
         # initial filters in the discriminator
         self.ndf = 512
+        
+        # initial filters in the classifier
+        self.ncf = 64
         
         # number of layers in the discriminator
         self.n_layers = 3
@@ -67,7 +73,7 @@ class opt:
         self.data_path = os.path.join(self.file_path, 'dataset')
         
         # path to save the model
-        self.gan_save_path = os.path.join(self.file_path, 'CycleGAN')
+        self.gan_save_path = os.path.join(self.file_path, 'CycleGAN_save')
         
         # training data fold for classification
         self.data_fold_c = None
