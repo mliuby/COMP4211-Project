@@ -30,6 +30,7 @@ class Classifier(nn.Module):
                     nn.BatchNorm2d(out_channels) if i > 0 else nn.Identity(),  # Skip batchnorm for the first layer
                     nn.LeakyReLU(0.2, inplace=True),
                 )
+                
             )
             in_channels = out_channels
         
