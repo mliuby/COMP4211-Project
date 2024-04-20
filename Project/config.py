@@ -14,6 +14,7 @@ class opt:
         
         # number of epochs
         self.n_epoch = 200
+        self.n_epoch_c = 200
         
         # number of epochs to save the model
         self.n_save = 10
@@ -50,12 +51,16 @@ class opt:
         
         # learning rate
         self.lr = 0.0002
+        self.lr_c = 0.0002
         
         # beta1 for Adam optimizer
         self.beta1 = 0.5
         
         # beta2 for Adam optimizer
         self.beta2 = 0.999
+
+        # momentum for SGD optimizer
+        self.momentum = 0.9
         
         # weight for generator loss
         self.gen_loss_weight = 10.0
@@ -74,7 +79,8 @@ class opt:
         
         # path to save the model
         self.gan_save_path = os.path.join(self.file_path, 'CycleGAN_save')
-        
+        self.classifier_save_path = os.path.join(self.file_path, 'Classifier_save')
+
         # training data fold for classification
         self.data_fold_c = None
         
@@ -83,8 +89,18 @@ class opt:
         
         # name of the class B
         self.name_B = 'B'
+
+        # name of classifier
+        self.name_C = 'C'
         
         # training data fold for generator
         self.data_fold_A = os.path.join(self.data_path, self.name_A)
         self.data_fold_B = os.path.join(self.data_path, self.name_B)
 
+        # check point for CycleGAN
+        #self.check_point =  
+
+        # check point for classifier
+        #self.check_point_c = 
+ 
+ 

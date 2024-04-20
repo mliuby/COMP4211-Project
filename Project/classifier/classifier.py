@@ -23,7 +23,7 @@ class Classifier(nn.Module):
         self.conv_layers = nn.ModuleList()
         in_channels = input_channels
         for i in range(self.num_downsamples):
-            out_channels = max(int(ndf * 2 ** (i - self.num_downsamples + 1)), 4)
+            out_channels = max(int(self.ncf * 2 ** (i - self.num_downsamples + 1)), 4)
             self.conv_layers.append(
                 nn.Sequential(
                     nn.Conv2d(in_channels, out_channels, kernel_size=4, stride=2, padding=1, bias=False),
