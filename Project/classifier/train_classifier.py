@@ -10,6 +10,7 @@ import classifier.classifier as classifier
 
 opt = config.opt()
 
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def train_cyclegan(netC = classifier(), n_epochs = opt.n_epoch_c, lr = opt.lr_c, momentum = opt.momentum, save_path = opt.classifier_save_path, n_save = opt.n_save, name_C = 'C', check_point = opt.check_point_c):
