@@ -6,6 +6,7 @@ import config
 
 opt = config.opt()
 
+
 class Classifier(nn.Module):
     def __init__(self, input_channels = opt.channels, input_size = opt.img_size, n_classes = opt.n_classes, ncf = opt.ncf):
         super(Classifier, self).__init__()
