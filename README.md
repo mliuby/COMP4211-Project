@@ -6,3 +6,4 @@
 - The data is in `./Project/dataset`, all input should be saved as `*.jpg` or `*.png`
 - The data loader and other related loading code are in `./Project/data`
 - The main file to train is `./Project/main.py`
+- All setting should in `./Project/config.py`
