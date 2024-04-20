@@ -1,7 +1,9 @@
 \documentclass{article}
 
-\usepackage[nonatbib, final]{neurips}
-\usepackage[numbers]{natbib}
+\usepackage{neurips}
+\usepackage{lmodern} % Add the missing font package
+\usepackage[backend=biber, style=numeric, citestyle=numeric]{biblatex}
+\addbibresource{proposal.bib}
 
 \makeatletter
 \renewcommand{\@noticestring}{
@@ -30,8 +32,11 @@
 
 \maketitle
 
+
 \section{Background}
 
+With the advancement of modern medicine, the development of technologies such as MRI and CT has made it particularly important for doctors to recognize various diagnostic images. 
+However, in modern medical education, educational materials are often lacking due to considerations of privacy and the shortage of educational resources \cite{vaggi_2003}.
 \section{Problem Statement}
 
 \section{Methodology}
@@ -42,9 +47,6 @@
 
 \section{Computational Resources}
 
-
-
-% \bibliographystyle{plainnat}
-% \bibliography{bibliography}
+\printbibliography
 
 \end{document}
