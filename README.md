@@ -1,4 +1,4 @@
-## The repo is used to save the group project of COMP4211 in HKUST. Created by Minghao Liu and [Ruiming Min](raymonmin.github.io).
+## The repo is used to save the group project of COMP4211 in HKUST. Created by Minghao Liu and [Ruiming Min](https://raymonmin.github.io).
 
 - The path to the project model is   `./Project`
 - The classify model is in `./Project/classify`
