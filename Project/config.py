@@ -19,9 +19,6 @@ class opt:
         # number of epochs to save the model
         self.n_save = 10
         
-        # number of classes
-        self.n_classes = 4
-        
         # initial filters in the generator
         self.ngf = 64
         
@@ -81,6 +78,8 @@ class opt:
         # training data path
         self.data_path = os.path.join(self.file_path, f'dataset/{self.name_T}')
         
+        # number of classes
+        self.n_classes = self.count_classes(self.data_path)
         
         # path to save the model
         self.gan_save_path = os.path.join(self.file_path, 'CycleGAN_save')
@@ -106,3 +105,7 @@ class opt:
         # check point for classifier
         self.check_point_c = None
 
+    def count_classes(self, path):
+        dir_contents = os.listdir(path)
+        class_folders = [d for d in dir_contents if os.path.isdir(os.path.join(path, d))]
+        return len(class_folders)
