@@ -51,6 +51,6 @@ class Classifier(nn.Module):
         
         output = self.linear(out)
         
-        out = torch.softmax(output, dim=1)
+        output = torch.softmax(output, dim=1)
         
         return output

@@ -13,13 +13,13 @@ class opt:
         self.channels = 3
         
         # check point for CycleGAN
-        self.check_point =  None
+        self.check_point =  5
         
         # name of the class A
-        self.name_A = 'lung_scc'
+        self.name_A = 'lung_aca'
         
         # name of the class B
-        self.name_B = 'lung_n'
+        self.name_B = 'lung_scc'
         
         # check point for classifier
         self.check_point_c = None
