@@ -8,15 +8,18 @@ Proposal/*.out
 Proposal/*.pdf
 Proposal/*.synctex.gz
 
-Project/datasets/*
 
 Project/cyclegan/cycle_gan_model.py
-
 Project/cyclegan/networks.py
-
 Project/dataset
 
 Project/Classifier_save
 Project/CycleGAN_save
 
 Project/test.py
+
+Project/__pycache__
+Project/classifier/__pycache__
+Project/cyclegan/__pycache__
+Project/data/__pycache__
+
