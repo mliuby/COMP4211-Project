@@ -2,7 +2,6 @@ from cyclegan import cyclegan
 from cyclegan.train_cyclegan import train_cyclegan
 from classifier.train_classifier import train_classifier
 from classifier import classifier
-
 from config import opt
 
 opt = opt()
@@ -20,5 +19,5 @@ if is_train_cyclegan:
     print(f"Training CycleGAN with {opt.name_A} and {opt.name_B}.")
     netG = cyclegan.cycleG()
     netD = cyclegan.cycleD()
-    train_cyclegan(netG=netG, netD=netD, name_A='A', name_B='B')
+    train_cyclegan(netG=netG, netD=netD)
     print("Training CycleGAN is done.")

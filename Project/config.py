@@ -12,12 +12,24 @@ class opt:
         # image channels
         self.channels = 3
         
+        # check point for CycleGAN
+        self.check_point =  10
+        
+        # name of the class A
+        self.name_A = 'lung_aca'
+        
+        # name of the class B
+        self.name_B = 'lung_n'
+        
+        # check point for classifier
+        self.check_point_c = None
+        
         # number of epochs
         self.n_epoch = 200
-        self.n_epoch_c = 200
+        self.n_epoch_c = 60
         
         # number of epochs to save the model
-        self.n_save = 10
+        self.n_save = 5
         
         # initial filters in the generator
         self.ngf = 64
@@ -88,22 +100,9 @@ class opt:
         # training data fold for classification
         self.data_fold_c = os.path.join(self.file_path, f'dataset/{self.name_T}')
         
-        # name of the class A
-        self.name_A = 'lung_aca'
-        
-        # name of the class B
-        self.name_B = 'lung_n'
-        
-        
         # training data fold for generator
         self.data_fold_A = os.path.join(self.data_path, self.name_A)
         self.data_fold_B = os.path.join(self.data_path, self.name_B)
-
-        # check point for CycleGAN
-        self.check_point =  None
-
-        # check point for classifier
-        self.check_point_c = None
 
     def count_classes(self, path):
         dir_contents = os.listdir(path)
