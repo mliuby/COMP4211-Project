@@ -2,7 +2,7 @@
 
 
 ### Project structure
-
+```
 Project/
 │
 ├── classifier/
@@ -26,9 +26,11 @@ Project/
 ├── dataset/
 │
 ├── config.py
+├── main.py
 └── train.py
+```
 
-### Project Explaination
+### Project Explanation
 
 - The path to the project model is   `./Project`
 - The classify model is in `./Project/classify`
@@ -46,3 +48,12 @@ squamous, and benign.
 --(2) Alzheimer_MRI Disease Classification Dataset
 dataset = load_dataset("Falah/Alzheimer_MRI")
 This dataset contains MRI scans of the brains of patients with Alzheimer’s disease. This dataset contains 5120 images with shapes of 128×128 and their corresponding labels representing severity. Specifically, the sizes of each class are: Mild Demented (724), Moderate Demented (49), Non-Demented(2566), Very Mild Demented (1781) .
+
+### Package used
+
+| Name          | Version              | Build                   | Channel |
+|---------------|----------------------|-------------------------|---------|
+| pytorch       | 2.2.2                | py3.10_cuda11.8_cudnn8.7.0_0 | pytorch |
+| torchvision   | 0.17.2               | py310_cu118             | pytorch |
+| torchaudio    | 2.2.2                | py310_cu118             | pytorch |
+| cuda-cudart   | 11.8.89              |                         | nvidia  |
