@@ -24,8 +24,8 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
     optimizer_C = optim.SGD(netC.parameters(), lr=lr, momentum=momentum)
     
     # load the model if it exists
-    if check_point is not None and os.path.exists(os.path.join(save_path, f"Classifier_save/{name_type}/.pth")):
-        netC.load_state_dict(torch.load(os.path.join(save_path, f"Classifier_save/{name_type}/netC_{check_point}.pth")))
+    if check_point is not None and os.path.exists(os.path.join(save_path, f"{name_type}/.pth")):
+        netC.load_state_dict(torch.load(os.path.join(save_path, f"{name_type}/netC_{check_point}.pth")))
         print(f"Model loaded from epoch {check_point}")
     else:
         print("Model is trained from scratch")
@@ -60,9 +60,9 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
             
         # Save models
         if (epoch+1) % n_save == 0:
-            if not os.path.exists(os.path.join(save_path, f"Classifier_save/{name_type}")):
-                os.makedirs(os.path.join(save_path, f"Classifier_save/{name_type}"))
-            torch.save(netC.state_dict(), os.path.join(save_path, f"Classifier_save/{name_type}/netC_{check_point}.pth"))
+            if not os.path.exists(os.path.join(save_path, f"{name_type}")):
+                os.makedirs(os.path.join(save_path, f"{name_type}"))
+            torch.save(netC.state_dict(), os.path.join(save_path, f"{name_type}/netC_{epoch}.pth"))
 
 
 
