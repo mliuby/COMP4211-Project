@@ -7,7 +7,7 @@ class opt:
     
     def __init__(self):
         # image size (shape should be power of 2)
-        self.img_size = 64
+        self.img_size = 96
         
         # image channels
         self.channels = 3
@@ -67,7 +67,7 @@ class opt:
         self.batch_size_c = 64
         
         # generator batch size
-        self.batch_size_g = 64
+        self.batch_size_g = 16
 
         # data path
         self.file_path = os.path.dirname(os.path.abspath(__file__))
