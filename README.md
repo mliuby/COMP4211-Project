@@ -1,5 +1,35 @@
 ## The repo is used to save the group project of COMP4211 in HKUST. Created by Minghao Liu and [Ruiming Min](https://raymonmin.github.io).
 
+
+### Project structure
+
+Project/
+│
+├── classifier/
+│   ├── __init__.py
+│   ├── classifier.py
+│   └── train_classifier.py
+│
+├── cyclegan/
+│   ├── __init__.py
+│   ├── cycle_gan_model.py
+│   ├── cyclegan.py
+│   ├── discriminators.py
+│   ├── generators.py
+│   ├── train_cyclegan.py
+│   └── Unet.py
+│
+├── data/
+│   ├── __init__.py
+│   └── dataloader.py
+│
+├── dataset/
+│
+├── config.py
+└── train.py
+
+### Project Explaination
+
 - The path to the project model is   `./Project`
 - The classify model is in `./Project/classify`
 - The CycleGAN model is in `./Project/cyclegan`
