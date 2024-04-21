@@ -8,6 +8,8 @@ from data.dataloader import DataLoader_CycleGAN
 import config
 import cyclegan.cyclegan as cyclegan
 
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = "expandable_segments:True"
+
 opt = config.opt()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -24,19 +26,19 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
     
     optimizer_G = optim.Adam(netG.parameters(), lr=lr, betas=(beta1, beta2))
     optimizer_D = optim.Adam(netD.parameters(), lr=lr, betas=(beta1, beta2))
-    
-    pbar_epoch = tqdm.tqdm(range(n_epochs))
-    
+        
     # load the model if it exists
     if check_point is not None and os.path.exists(os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}/netG_{check_point}.pth")) and os.path.exists(os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}/netD_{check_point}.pth")):
         netG.load_state_dict(torch.load(os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}/netG_{check_point}.pth")))
         netD.load_state_dict(torch.load(os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}/netD_{check_point}.pth")))
     
-    for epoch in pbar_epoch:
+    for epoch in range(n_epochs):
         
-        pbar_batch = tqdm.tqdm(dataloader.get_dataloader())
+        loaded_data = dataloader.get_dataloader()
         
-        for i, (real_A, real_B) in enumerate(pbar_batch):
+        pbar_batch = tqdm.tqdm(loaded_data)
+        
+        for real_A, real_B in pbar_batch:
             
             real_A = real_A.to(device)
             real_B = real_B.to(device)
@@ -46,11 +48,16 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
             
             fake_A, fake_B = netG(real_A, real_B)
             
+            #print(fake_A.shape, fake_B.shape, real_A.shape, real_B.shape)
+                        
             validity_A_real, validity_B_real = netD(real_A, real_B)
             validity_A_fake, validity_B_fake = netD(fake_A, fake_B)
             
-            d_loss_real = -torch.log(validity_A_real+1e-20) - torch.log(validity_B_real+1e-20)
-            d_loss_fake = -torch.log(1-validity_A_fake+1e-20) - torch.log(1-validity_B_fake+1e-20)
+            #print(validity_A_real.shape, validity_B_real.shape, validity_A_fake.shape, validity_B_fake.shape)
+            
+            d_loss_real = torch.mean(-torch.log(validity_A_real+1e-20) - torch.log(validity_B_real+1e-20))
+            d_loss_fake = torch.mean(-torch.log(1-validity_A_fake+1e-20) - torch.log(1-validity_B_fake+1e-20))
+                        
             d_loss = d_loss_fake + d_loss_real
             
             d_loss.backward()
@@ -64,7 +71,7 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
             
             validity_A_fake, validity_B_fake = netD(fake_A, fake_B)
             
-            g_loss_fake = -torch.log(validity_A_fake+1e-20) - torch.log(validity_B_fake+1e-20)
+            g_loss_fake = torch.mean(-torch.log(validity_A_fake+1e-20) - torch.log(validity_B_fake+1e-20))
             
             g_loss_cycle = cycle_loss(real_A, cycle_A) + cycle_loss(real_B, cycle_B)
 
@@ -74,7 +81,7 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
             optimizer_G.step()
             
             # Update progress bar
-            pbar_batch.set_description(f"Epoch {epoch+1}/{n_epochs}, Batch {i+1}/{dataloader.get_batch_size()}, D Loss: {d_loss.item()}, G Loss: {g_loss.item()}")
+            pbar_batch.set_description(f"Epoch {epoch+1}/{n_epochs}, D Loss: {d_loss.item()}, G Loss: {g_loss.item()}")
             
         # Save models
         if (epoch+1) % n_save == 0:
@@ -82,6 +89,10 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
                 os.makedirs(os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}"))
             if not os.path.exists(os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}")):
                 os.makedirs(os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}"))
-                
-            torch.save(netG.state_dict(), os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}/netG_{epoch+1}.pth"))
-            torch.save(netD.state_dict(), os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}/netD_{epoch+1}.pth"))
+            
+            if check_point is not None:
+                os.remove(os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}/netG_{check_point+epoch+1}.pth"))
+                os.remove(os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}/netD_{check_point+epoch+1}.pth"))
+            else:
+                torch.save(netG.state_dict(), os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}/netG_{epoch+1}.pth"))
+                torch.save(netD.state_dict(), os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}/netD_{epoch+1}.pth"))

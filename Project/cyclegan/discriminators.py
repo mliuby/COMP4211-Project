@@ -31,7 +31,7 @@ class Discriminator(nn.Module):
             )
             in_channels = out_channels
         
-        final_conv_dim = 4
+        final_conv_dim = 1
         self.final_dim = final_conv_dim * self.ndf
 
         self.linear1 = nn.Linear(self.final_dim, 1, bias=True)
@@ -45,6 +45,7 @@ class Discriminator(nn.Module):
             out = conv_layer(out)
 
         out = out.view(-1, self.final_dim)
+        
         
         validity = self.linear1(out)
         

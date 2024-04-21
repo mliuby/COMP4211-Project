@@ -7,8 +7,8 @@ from config import opt
 
 opt = opt()
 
-is_train_cyclegan = False
-is_train_classifier = True
+is_train_cyclegan = True
+is_train_classifier = False
     
 if is_train_classifier:
     netC = classifier.Classifier()

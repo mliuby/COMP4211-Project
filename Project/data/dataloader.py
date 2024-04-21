@@ -1,11 +1,14 @@
-import torch
-from torch.utils.data import DataLoader
-import torchvision.datasets as datasets
-from torchvision.datasets import ImageFolder
-from torchvision import transforms
 import os
-
+import torch
+from torch.utils.data import DataLoader, random_split
+from torchvision import datasets, transforms
 import config
+from torchvision.datasets import ImageFolder
+from PIL import Image
+from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms
+
+opt = config.opt()
 opt = config.opt()
 class CustomImageFolder(datasets.ImageFolder):
     def __init__(self, root, transform=None, num_classes=None):
@@ -20,14 +23,34 @@ class CustomImageFolder(datasets.ImageFolder):
 
         return img, one_hot
     
+class CustomImageDataset(Dataset):
+    def __init__(self, root, transform=None):
+        self.root = root
+        self.transform = transform
+        self.images = [os.path.join(root, file) for file in os.listdir(root)]
+
+    def __len__(self):
+        return len(self.images)
+
+    def __getitem__(self, idx):
+        image_path = self.images[idx]
+        image = Image.open(image_path).convert('RGB')
+        
+        if self.transform:
+            image = self.transform(image)
+
+        return image
+    
 class DataLoader_Classifier:
     def __init__(self, data_dir = opt.data_path, data_fold = opt.data_fold_c, batch_size = opt.batch_size_c, img_size = opt.img_size, n_classes = opt.n_classes, shuffle = True):
         self.data_dir = data_dir
         self.data_fold = os.path.join(self.data_dir, data_fold)
         self.batch_size = batch_size
         self.img_size = img_size
+        self.shuffle = shuffle
+        self.n_classes = n_classes
         
-        self.dataset = CustomImageFolder(
+        self.full_dataset = CustomImageFolder(
             root=self.data_fold,
             transform=transforms.Compose([
                 transforms.Resize((self.img_size, self.img_size)),
@@ -36,10 +59,17 @@ class DataLoader_Classifier:
             num_classes=n_classes
         )
         
-        self.dataloader = DataLoader(self.dataset, batch_size=self.batch_size, shuffle=shuffle, num_workers=opt.n_cpu)
+        train_size = int(0.8 * len(self.full_dataset))
+        test_size = len(self.full_dataset) - train_size
+        self.train_dataset, self.test_dataset = random_split(self.full_dataset, [train_size, test_size])
+
+        self.train_loader = DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=shuffle, num_workers=opt.n_cpu)
+        self.test_loader = DataLoader(self.test_dataset, batch_size=self.batch_size, shuffle=shuffle, num_workers=opt.n_cpu)
         
+        self.label_names = self.full_dataset.class_to_idx
+            
     def get_dataloader(self):
-        return self.dataloader
+        return self.train_loader, self.test_loader
     
     def get_batch_size(self):
         return self.batch_size
@@ -49,6 +79,11 @@ class DataLoader_Classifier:
     
     def get_data_fold(self):
         return self.data_fold
+    
+    def get_labels_names(self):
+        return self.label_names
+
+
 
 class DataLoader_CycleGAN:
     def __init__(self, data_dir = opt.data_path, data_fold_A = opt.data_fold_A, data_fold_B = opt.data_fold_B,  batch_size = opt.batch_size_g, img_size = opt.img_size, shuffle = True):
@@ -59,12 +94,12 @@ class DataLoader_CycleGAN:
         self.img_size = img_size
         
         
-        self.dataset_A = ImageFolder(root=self.data_fold_A, transform=transforms.Compose([
+        self.dataset_A = CustomImageDataset(root=self.data_fold_A, transform=transforms.Compose([
             transforms.Resize((self.img_size,self.img_size)),
             transforms.ToTensor(),
         ]))
         
-        self.dataset_B = ImageFolder(root=self.data_fold_B, transform=transforms.Compose([
+        self.dataset_B = CustomImageDataset(root=self.data_fold_B, transform=transforms.Compose([
             transforms.Resize((self.img_size,self.img_size)),
             transforms.ToTensor(),
         ]))
@@ -86,3 +121,6 @@ class DataLoader_CycleGAN:
     
     def get_data_fold_B(self):
         return self.data_fold_B
+    
+    def get_len(self):
+        return len(self.dataloader_A)

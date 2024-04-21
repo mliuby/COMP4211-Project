@@ -35,7 +35,10 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
     for epoch in range(n_epochs):
         
         total_loss = 0
-        pbar_batch = tqdm.tqdm(dataloader.get_dataloader())
+        
+        training_data, _ = dataloader.get_dataloader()
+        
+        pbar_batch = tqdm.tqdm(training_data)
         
         for i, data in enumerate(pbar_batch):
 
@@ -64,9 +67,5 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
                 os.makedirs(os.path.join(save_path, f"{name_type}"))
             if check_point is not None:
                 torch.save(netC.state_dict(), os.path.join(save_path, f"{name_type}/netC_{check_point+epoch+1}.pth"))
-            torch.save(netC.state_dict(), os.path.join(save_path, f"{name_type}/netC_{epoch+1}.pth"))
-
-
-
-
-            
+            else:
+                torch.save(netC.state_dict(), os.path.join(save_path, f"{name_type}/netC_{epoch+1}.pth"))

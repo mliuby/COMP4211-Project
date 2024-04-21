@@ -60,8 +60,8 @@ class opt:
         self.momentum = 0.9
         
         # weight for generator loss
-        self.gen_loss_weight = 10.0
-        self.cycle_loss_weight = 10.0
+        self.gen_loss_weight = 1
+        self.cycle_loss_weight = 1
         
         # classifying batch size
         self.batch_size_c = 64
@@ -89,10 +89,10 @@ class opt:
         self.data_fold_c = os.path.join(self.file_path, f'dataset/{self.name_T}')
         
         # name of the class A
-        self.name_A = 'A'
+        self.name_A = 'lung_aca'
         
         # name of the class B
-        self.name_B = 'B'
+        self.name_B = 'lung_n'
         
         
         # training data fold for generator
