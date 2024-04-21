@@ -29,7 +29,7 @@ class opt:
         self.ndf = 512
         
         # initial filters in the classifier
-        self.ncf = 64
+        self.ncf = 128
         
         # number of layers in the discriminator
         self.n_layers = 3
@@ -74,24 +74,26 @@ class opt:
 
         # data path
         self.file_path = os.path.dirname(os.path.abspath(__file__))
+        
+        # name of type
+        self.name_T = 'lung'
+        
         # training data path
-        self.data_path = os.path.join(self.file_path, 'dataset')
+        self.data_path = os.path.join(self.file_path, f'dataset/{self.name_T}')
+        
         
         # path to save the model
         self.gan_save_path = os.path.join(self.file_path, 'CycleGAN_save')
         self.classifier_save_path = os.path.join(self.file_path, 'Classifier_save')
-
+        
         # training data fold for classification
-        self.data_fold_c = None
+        self.data_fold_c = os.path.join(self.file_path, f'dataset/{self.name_T}')
         
         # name of the class A
         self.name_A = 'A'
         
         # name of the class B
         self.name_B = 'B'
-
-        # name of classifier
-        self.name_C = 'C'
         
         
         # training data fold for generator
@@ -99,9 +101,8 @@ class opt:
         self.data_fold_B = os.path.join(self.data_path, self.name_B)
 
         # check point for CycleGAN
-        #self.check_point =  
+        self.check_point =  None
 
         # check point for classifier
-        #self.check_point_c = 
- 
- 
+        self.check_point_c = None
+

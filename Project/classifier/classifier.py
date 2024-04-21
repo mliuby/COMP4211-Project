@@ -50,6 +50,6 @@ class Classifier(nn.Module):
         
         output = self.linear(out)
         
-        out = torch.sigmoid(output)
+        out = torch.softmax(output, dim=1)
         
         return output

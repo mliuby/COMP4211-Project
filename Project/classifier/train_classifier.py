@@ -13,7 +13,7 @@ opt = config.opt()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def train_cyclegan(netC = classifier(), n_epochs = opt.n_epoch_c, lr = opt.lr_c, momentum = opt.momentum, save_path = opt.classifier_save_path, n_save = opt.n_save, name_C = 'C', check_point = opt.check_point_c):
+def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, lr = opt.lr_c, momentum = opt.momentum, save_path = opt.classifier_save_path, n_save = opt.n_save, check_point = opt.check_point_c, name_type=opt.name_T):
     
     dataloader = DataLoader_Classifier()
 
@@ -26,8 +26,8 @@ def train_cyclegan(netC = classifier(), n_epochs = opt.n_epoch_c, lr = opt.lr_c,
     pbar_epoch = tqdm.tqdm(range(n_epochs))
     
     # load the model if it exists
-    if os.path.exists(os.path.join(save_path, f"classifer/{name_C}/.pth")):
-        netC.load_state_dict(torch.load(os.path.join(save_path, f"classifer/{name_C}/netC_{check_point}.pth")))
+    if check_point is not None and os.path.exists(os.path.join(save_path, f"Classifier_save/{name_type}/.pth")):
+        netC.load_state_dict(torch.load(os.path.join(save_path, f"Classifier_save/{name_type}/netC_{check_point}.pth")))
 
     for epoch in pbar_epoch:
         
@@ -52,7 +52,7 @@ def train_cyclegan(netC = classifier(), n_epochs = opt.n_epoch_c, lr = opt.lr_c,
             
         # Save models
         if (epoch+1) % n_save == 0:
-            torch.save(netC.state_dict(), os.path.join(save_path, f"classifer/{name_C}/.pth"))
+            torch.save(netC.state_dict(), os.path.join(save_path, f"Classifier_save/{name_type}/netC_{check_point}.pth"))
 
 
 
