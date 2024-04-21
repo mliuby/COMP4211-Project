@@ -13,7 +13,7 @@ class opt:
         self.channels = 3
         
         # check point for CycleGAN
-        self.check_point =  5
+        self.check_point =  None
         
         # name of the class A
         self.name_A = 'lung_aca'
