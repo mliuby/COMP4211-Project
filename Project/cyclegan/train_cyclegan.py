@@ -78,5 +78,10 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
             
         # Save models
         if (epoch+1) % n_save == 0:
+            if not os.path.exists(os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}")):
+                os.makedirs(os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}"))
+            if not os.path.exists(os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}")):
+                os.makedirs(os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}"))
+                
             torch.save(netG.state_dict(), os.path.join(save_path, f"generator/{name_type}/{name_A}_and_{name_B}/netG_{epoch+1}.pth"))
             torch.save(netD.state_dict(), os.path.join(save_path, f"discriminator/{name_type}/{name_A}_and_{name_B}/netD_{epoch+1}.pth"))

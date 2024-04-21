@@ -32,9 +32,7 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
         
     print(f"Training Classifier in {device}")
 
-    pbar_epoch = tqdm.tqdm(range(n_epochs))
-
-    for epoch in pbar_epoch:
+    for epoch in range(n_epochs):
         
         total_loss = 0
         pbar_batch = tqdm.tqdm(dataloader.get_dataloader())
@@ -62,6 +60,8 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
             
         # Save models
         if (epoch+1) % n_save == 0:
+            if not os.path.exists(os.path.join(save_path, f"Classifier_save/{name_type}")):
+                os.makedirs(os.path.join(save_path, f"Classifier_save/{name_type}"))
             torch.save(netC.state_dict(), os.path.join(save_path, f"Classifier_save/{name_type}/netC_{check_point}.pth"))
 
 
