@@ -35,10 +35,9 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
     for epoch in range(n_epochs):
         
         loaded_data = dataloader.get_dataloader()
-        
+        batch_len = dataloader.get_len()
         pbar_batch = tqdm.tqdm(loaded_data)
-        
-        for real_A, real_B in pbar_batch:
+        for i, (real_A,real_B) in enumerate(pbar_batch):
             
             real_A = real_A.to(device)
             real_B = real_B.to(device)
@@ -81,7 +80,7 @@ def train_cyclegan(netG = cyclegan.cycleD(), netD = cyclegan.cycleG(), n_epochs 
             optimizer_G.step()
             
             # Update progress bar
-            pbar_batch.set_description(f"Epoch {epoch+1}/{n_epochs}, D Loss: {d_loss.item()}, G Loss: {g_loss.item()}")
+            pbar_batch.set_description(f"Epoch {epoch+1}/{n_epochs}, batch {i}/{batch_len}, D Loss: {d_loss.item()}, G Loss: {g_loss.item()}")
             
         # Save models
         if (epoch+1) % n_save == 0:
