@@ -14,7 +14,7 @@ class Discriminator(nn.Module):
         self.input_size = input_size
         self.channels = input_channels
 
-        size = int(np.sqrt(self.input_size))
+        size = self.input_size
         self.num_downsamples = int(np.log2(size) - np.log2(2)) 
         self.conv_layers = nn.ModuleList()
         in_channels = input_channels
@@ -39,7 +39,7 @@ class Discriminator(nn.Module):
         self.linear1 = spectral_norm(self.linear1)
 
     def forward(self, x):
-        size = int(np.sqrt(self.input_size))
+        size = self.input_size
         out = x.view(-1, self.channels,size,size)
         for conv_layer in self.conv_layers:
             out = conv_layer(out)

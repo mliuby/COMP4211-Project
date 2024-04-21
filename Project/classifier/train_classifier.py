@@ -22,15 +22,21 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
     netC.to(device)
     
     optimizer_C = optim.SGD(netC.parameters(), lr=lr, momentum=momentum)
-
-    pbar_epoch = tqdm.tqdm(range(n_epochs))
     
     # load the model if it exists
     if check_point is not None and os.path.exists(os.path.join(save_path, f"Classifier_save/{name_type}/.pth")):
         netC.load_state_dict(torch.load(os.path.join(save_path, f"Classifier_save/{name_type}/netC_{check_point}.pth")))
+        print(f"Model loaded from epoch {check_point}")
+    else:
+        print("Model is trained from scratch")
+        
+    print(f"Training Classifier in {device}")
+
+    pbar_epoch = tqdm.tqdm(range(n_epochs))
 
     for epoch in pbar_epoch:
         
+        total_loss = 0
         pbar_batch = tqdm.tqdm(dataloader.get_dataloader())
         
         for i, data in enumerate(pbar_batch):
@@ -38,6 +44,7 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
             images, labels = data
             
             images = images.to(device)
+            labels = labels.to(device)
             
             optimizer_C.zero_grad()
             
@@ -46,9 +53,12 @@ def train_classifier(netC = classifier.Classifier(), n_epochs = opt.n_epoch_c, l
             loss.backward()
             optimizer_C.step()
             
+            total_loss += loss.item()
+            
+            avg_loss = total_loss / (i+1)
             
             # Update progress bar
-            pbar_batch.set_description(f"Epoch {epoch+1}/{n_epochs}, Batch {i+1}/{dataloader.get_batch_size()}, Loss: {loss.item()}")
+            pbar_batch.set_description(f"Epoch {epoch+1}/{n_epochs}, Loss: {avg_loss}")
             
         # Save models
         if (epoch+1) % n_save == 0:
