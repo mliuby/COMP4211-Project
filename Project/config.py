@@ -13,7 +13,7 @@ class opt:
         self.channels = 3
         
         # check point for CycleGAN
-        self.check_point =  None
+        self.check_point =  30
         
         # name of the class A
         self.name_A = 'lung_aca'
@@ -25,7 +25,7 @@ class opt:
         self.check_point_c = None
         
         # number of epochs
-        self.n_epoch = 200
+        self.n_epoch = 15
         self.n_epoch_c = 60
         
         # number of epochs to save the model
