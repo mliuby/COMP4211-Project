@@ -16,7 +16,7 @@ name_A = 'lung_aca'
 name_B = 'lung_n'
 name_C = 'lung_scc'
 
-name_R = name_B
+name_R = name_C
 
 name_r = name_R.replace("_", "")
 
