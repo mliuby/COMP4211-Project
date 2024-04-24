@@ -83,16 +83,19 @@ def inference(image_path, save_path,netC, netG_aca_n, netG_aca_scc, netG_scc_n, 
     plt.subplot(3, 1, 1)
     plt.imshow(image_n[0])
     plt.title('n (real)' if predicted_class == 'lung_n' else 'n (fake)')
+    plt.axis('off')
 
     plt.subplot(3, 1, 2)
     plt.imshow(image_aca[0])
     plt.title('aca (real)' if predicted_class == 'lung_aca' else 'aca (fake)')
+    plt.axis('off')
 
     plt.subplot(3, 1, 3)
     plt.imshow(image_scc[0])
     plt.title('scc (real)' if predicted_class == 'lung_scc' else 'scc (fake)')
+    plt.axis('off')
 
-    plt.savefig(os.path.join(save_path, f'output{idx}.png'))
+    plt.savefig(os.path.join(save_path, f'output{idx}.png'), bbox_inches='tight')
 
 
 if __name__ == '__main__':
