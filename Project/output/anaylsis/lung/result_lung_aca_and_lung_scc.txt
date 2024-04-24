@@ -1,0 +1,1 @@
+Accuracy of the network on the fake images from lung_scc to lung_aca: 78.82000000000001%Accuracy of the network on the fake images from lung_aca to lung_scc: 60.519999999999996%

@@ -1,0 +1,1 @@
+Accuracy of the network on the fake images from lung_n to lung_scc: 81.86%Accuracy of the network on the fake images from lung_scc to lung_n: 97.22%
