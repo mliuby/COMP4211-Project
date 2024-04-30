@@ -30,7 +30,7 @@ else:
     device = torch.device("cpu")
 
 def transform (size):
-  return transforms.Compose([
+    return transforms.Compose([
     transforms.Resize((size, size)),
     transforms.ToTensor(),
 ])

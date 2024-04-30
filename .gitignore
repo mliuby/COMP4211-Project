@@ -17,6 +17,7 @@ Project/Classifier_save
 Project/CycleGAN_save
 
 Project/test.py
+Project/generation.py
 
 Project/__pycache__
 Project/classifier/__pycache__
@@ -26,3 +27,9 @@ Project/data/__pycache__
 Project/test.ipynb
 Project/inference.ipynb
 
+Project/output/analysis/lung_scc_to_lung_aca
+Project/output/analysis/lung_scc_to_lung_n
+Project/output/analysis/lung_aca_to_lung_scc
+Project/output/analysis/lung_aca_to_lung_n
+Project/output/analysis/lung_n_to_lung_scc
+Project/output/analysis/lung_n_to_lung_aca

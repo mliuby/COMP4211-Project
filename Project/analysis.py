@@ -22,7 +22,7 @@ name_R = name_C
 name_r = name_R.replace("_", "")
 
 img_path = f'./dataset/lung/{name_R}'
-save_path = f'./output/anaylsis/{name_type}'
+save_path = f'./output/analysis/{name_type}'
 
 
 if torch.cuda.is_available():
